@@ -1,0 +1,225 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchPlayer } from "../services/api";
+import "./PlayerPage.css";
+
+const STAT_LABELS = {
+  BA: "Batting Avg",
+  HR: "Home Runs",
+  RBI: "RBIs",
+  SB: "Stolen Bases",
+  H: "Hits",
+  R: "Runs",
+  BB: "Walks",
+  SO: "Strikeouts",
+  OBP: "On-Base %",
+  SLG: "Slugging %",
+  ERA: "ERA",
+  W: "Wins",
+  L: "Losses",
+  K: "Strikeouts",
+  IP: "Innings Pitched",
+  WHIP: "WHIP",
+};
+
+function formatStat(key, value) {
+  const floatStats = ["BA", "OBP", "SLG", "ERA", "WHIP"];
+  if (floatStats.includes(key) && typeof value === "number") {
+    return value.toFixed(3);
+  }
+  return String(value);
+}
+
+function Badge({ label, variant }) {
+  return <span className={`badge badge-${variant}`}>{label}</span>;
+}
+
+function StatCard({ label, value }) {
+  return (
+    <div className="stat-card">
+      <span className="stat-label">{label}</span>
+      <span className="stat-value">{value}</span>
+    </div>
+  );
+}
+
+export default function PlayerPage() {
+  const { playerId } = useParams();
+  const navigate = useNavigate();
+  const [player, setPlayer] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [notes, setNotes] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState("");
+  const [draftPrice, setDraftPrice] = useState("");
+  const [saveMessage, setSaveMessage] = useState("");
+
+  const draftTeams = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6"];
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    setPlayer(null);
+
+    fetchPlayer(playerId)
+      .then((data) => {
+        if (!cancelled) setPlayer(data);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [playerId]);
+
+  useEffect(() => {
+    const storedNotes = localStorage.getItem(`player-notes:${playerId}`) || "";
+    setNotes(storedNotes);
+    setSelectedTeam("");
+    setDraftPrice("");
+    setSaveMessage("");
+  }, [playerId]);
+
+  if (loading) {
+    return (
+      <div className="player-loading">
+        <div className="spinner" />
+        <p>Loading player data</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="player-error">
+        <div className="error-icon">!</div>
+        <h3>Failed to load player</h3>
+        <p>{error}</p>
+        <button className="retry-btn" onClick={() => navigate(0)}>
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  if (!player) return null;
+
+  const statEntries = player.stats ? Object.entries(player.stats) : [];
+
+  function saveNotes() {
+    localStorage.setItem(`player-notes:${playerId}`, notes);
+    setSaveMessage("Notes saved.");
+    setTimeout(() => setSaveMessage(""), 1500);
+  }
+
+  function handleDraftPlayer() {
+    if (!selectedTeam || !draftPrice) {
+      setSaveMessage("Select a team and enter a draft price.");
+      return;
+    }
+
+    setSaveMessage(`Drafted to ${selectedTeam} for $${draftPrice}.`);
+  }
+
+  return (
+    <div className="player-page">
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        &larr; Back
+      </button>
+
+      <div className="player-layout-grid">
+        <div className="player-left-column">
+          <div className="player-header-card">
+            <h2 className="player-name">{player.name}</h2>
+            <div className="badge-row">
+              {player.position?.map((pos) => (
+                <Badge key={pos} label={pos} variant="position" />
+              ))}
+              {player.team && <Badge label={player.team} variant="team" />}
+              {player.league && <Badge label={player.league} variant={player.league === "AL" ? "league-al" : "league-nl"} />}
+            </div>
+
+            <div className="stats-grid">
+              {statEntries.map(([key, value]) => (
+                <StatCard
+                  key={key}
+                  label={STAT_LABELS[key] || key}
+                  value={formatStat(key, value)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="player-notes-card">
+            <h3>Player Notes</h3>
+            <textarea
+              className="player-notes-input"
+              placeholder="Add notes about this player..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows={4}
+            />
+            <button className="notes-save-btn" onClick={saveNotes}>
+              Save Notes
+            </button>
+          </div>
+        </div>
+
+        <div className="player-actions-card">
+          <h3>Draft Player</h3>
+          <label className="form-label" htmlFor="team-select">
+            Select Team
+          </label>
+          <select
+            id="team-select"
+            className="form-input"
+            value={selectedTeam}
+            onChange={(e) => setSelectedTeam(e.target.value)}
+          >
+            <option value="">Choose team...</option>
+            {draftTeams.map((team) => (
+              <option key={team} value={team}>
+                {team}
+              </option>
+            ))}
+          </select>
+
+          <label className="form-label" htmlFor="draft-price">
+            Draft Price
+          </label>
+          <input
+            id="draft-price"
+            className="form-input"
+            type="number"
+            min="1"
+            placeholder="$"
+            value={draftPrice}
+            onChange={(e) => setDraftPrice(e.target.value)}
+          />
+
+          <button className="draft-btn" onClick={handleDraftPlayer}>
+            Draft Player
+          </button>
+        </div>
+      </div>
+
+      <div className="player-meta">
+        <span className="meta-label">Source</span>
+        <span className="meta-value source-badge">{player.source}</span>
+        <span className="meta-sep" />
+        <span className="meta-label">Last updated</span>
+        <span className="meta-value">
+          {new Date(player.fetchedAt).toLocaleString()}
+        </span>
+      </div>
+
+      {saveMessage && <p className="player-feedback">{saveMessage}</p>}
+    </div>
+  );
+}

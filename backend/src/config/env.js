@@ -15,4 +15,5 @@ module.exports = {
   mongodbUri: process.env.MONGODB_URI,
   externalApiKey: process.env.EXTERNAL_API_KEY,
   appClientKey: process.env.APP_CLIENT_KEY,
+  corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173",
 };

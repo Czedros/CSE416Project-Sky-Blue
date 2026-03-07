@@ -16,9 +16,10 @@ npm install
 npm run dev
 ```
 
-## API endpoint
+## API endpoints
 
-`GET /api/player/:playerId`
+- `GET /api/players`
+- `GET /api/players/:playerId`
 
 Requires header:
 
@@ -29,7 +30,7 @@ Requires header:
 Missing auth (should be `401`):
 
 ```bash
-curl -i http://localhost:3000/api/player/123
+curl -i http://localhost:3000/api/players/123
 ```
 
 Authorized first request (should be `source: "external"`):
@@ -37,7 +38,7 @@ Authorized first request (should be `source: "external"`):
 ```bash
 curl -i \
   -H "Authorization: Bearer $APP_CLIENT_KEY" \
-  http://localhost:3000/api/player/123
+  http://localhost:3000/api/players/123
 ```
 
 Second authorized request for same ID (should be `source: "cache"`):
@@ -45,5 +46,5 @@ Second authorized request for same ID (should be `source: "cache"`):
 ```bash
 curl -i \
   -H "Authorization: Bearer $APP_CLIENT_KEY" \
-  http://localhost:3000/api/player/123
+  http://localhost:3000/api/players/123
 ```
