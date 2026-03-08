@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchPlayer, savePlayerNotes } from "../services/api";
+import { fetchPlayer } from "../services/api";
 import "./PlayerPage.css";
 
 const STAT_LABELS = {
@@ -66,7 +66,6 @@ export default function PlayerPage() {
       .then((data) => {
         if (!cancelled) {
           setPlayer(data);
-          setNotes(data?.notes || "");
         }
       })
       .catch((err) => {
@@ -82,6 +81,8 @@ export default function PlayerPage() {
   }, [playerId]);
 
   useEffect(() => {
+    const storedNotes = localStorage.getItem(`player-notes:${playerId}`) || "";
+    setNotes(storedNotes);
     setSelectedTeam("");
     setDraftPrice("");
     setSaveMessage("");
@@ -113,14 +114,10 @@ export default function PlayerPage() {
 
   const statEntries = player.stats ? Object.entries(player.stats) : [];
 
-  async function saveNotes() {
-    try {
-      await savePlayerNotes(playerId, notes);
-      setSaveMessage("Notes saved.");
-      setTimeout(() => setSaveMessage(""), 1500);
-    } catch (saveError) {
-      setSaveMessage(saveError.message || "Failed to save notes.");
-    }
+  function saveNotes() {
+    localStorage.setItem(`player-notes:${playerId}`, notes);
+    setSaveMessage("Notes saved.");
+    setTimeout(() => setSaveMessage(""), 1500);
   }
 
   function handleDraftPlayer() {
