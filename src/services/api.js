@@ -35,6 +35,9 @@ export async function fetchPlayer(playerId) {
     if (res.status === 401) {
       throw new Error("Unauthorized — check your API key.");
     }
+    if (res.status === 404) {
+      throw new Error("Player not found.");
+    }
     throw new Error(`Server error (${res.status})`);
   }
 

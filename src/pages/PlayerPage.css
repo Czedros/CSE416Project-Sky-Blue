@@ -129,16 +129,6 @@
   color: var(--text);
 }
 
-.source-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: #f1f5f9;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
 .meta-sep {
   width: 1px;
   height: 14px;

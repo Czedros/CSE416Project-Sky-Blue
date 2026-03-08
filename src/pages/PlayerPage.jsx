@@ -212,9 +212,6 @@ export default function PlayerPage() {
       </div>
 
       <div className="player-meta">
-        <span className="meta-label">Source</span>
-        <span className="meta-value source-badge">{player.source}</span>
-        <span className="meta-sep" />
         <span className="meta-label">Last updated</span>
         <span className="meta-value">
           {new Date(player.fetchedAt).toLocaleString()}
