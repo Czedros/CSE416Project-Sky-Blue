@@ -118,3 +118,10 @@
   justify-content: center;
   color: #fff;
 }
+
+.logout-btn {
+  border: none;
+  background: transparent;
+  margin-top: 8px;
+  color: var(--text);
+}
