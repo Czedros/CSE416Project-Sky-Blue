@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginForm } from "../components/LoginForm";
 import { useAuth } from "../hooks/useAuth";
+import "./LoginPage.css";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
