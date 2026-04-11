@@ -104,7 +104,7 @@ router.put("/:username/draft", authMiddleware, async (req, res, next) => {
   }
 });
 
-router.post("/verify-token", (req, res) => {
+router.post("/verify-token", async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
@@ -113,9 +113,15 @@ router.post("/verify-token", (req, res) => {
 
   try {
     const decoded = jwt.verify(token, env.jwtSecret);
-    res.status(200).json(decoded);
+    const user = await User.findById(decoded.id).select("username draft");
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid or expired token" });
+    }
+
+    return res.status(200).json({ id: user._id, username: user.username, draft: user.draft });
   } catch (err) {
-    res.status(401).json({ message: "Invalid or expired token" });
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 });
 
