@@ -152,3 +152,33 @@ export async function createDraft(draftPayload) {
     body: draftPayload,
   });
 }
+
+export async function fetchDraftById(draftId) {
+  return requestJson(CLIENT_BACKEND_URL, `/api/drafts/${encodeURIComponent(draftId)}`, {
+    method: "GET",
+    userAuth: true,
+    statusMessages: {
+      404: "Draft not found.",
+    },
+  });
+}
+
+export async function fetchTeamById(teamId) {
+  return requestJson(CLIENT_BACKEND_URL, `/api/teams/${encodeURIComponent(teamId)}`, {
+    method: "GET",
+    userAuth: true,
+    statusMessages: {
+      404: "Team not found.",
+    },
+  });
+}
+
+export async function removeTeamPlayer(teamId, playerId) {
+  return requestJson(CLIENT_BACKEND_URL, `/api/teams/${encodeURIComponent(teamId)}/roster/${encodeURIComponent(playerId)}`, {
+    method: "DELETE",
+    userAuth: true,
+    statusMessages: {
+      404: "Player or team not found.",
+    },
+  });
+}

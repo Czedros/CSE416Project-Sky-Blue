@@ -1,12 +1,53 @@
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { fetchDraftById } from "../services/api";
 import "./Sidebar.css";
-
-const SAMPLE_TEAMS = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6"];
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
+  const [teams, setTeams] = useState([]);
+  const [loadingTeams, setLoadingTeams] = useState(false);
+  const [teamsError, setTeamsError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let cancelled = false;
+    //AI generated - Load teams for user's draft if available
+    async function loadTeams() {
+      if (!user?.draft) {
+        setTeams([]);
+        setTeamsError("");
+        setLoadingTeams(false);
+        return;
+      }
+
+      setLoadingTeams(true);
+      setTeamsError("");
+
+      try {
+        const data = await fetchDraftById(user.draft);
+        if (!cancelled) {
+          setTeams(Array.isArray(data?.teams) ? data.teams : []);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setTeams([]);
+          setTeamsError("Unable to load teams for your draft.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingTeams(false);
+        }
+      }
+    }
+
+    loadTeams();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.draft]);
 
   const handleLogout = () => {
     logout();
@@ -35,9 +76,25 @@ export default function Sidebar() {
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1a3 3 0 0 0-3 3v2a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3ZM3 13c0-2.21 2.24-4 5-4s5 1.79 5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
           Teams
         </h3>
-        {SAMPLE_TEAMS.map((team) => (
-          <span key={team} className="nav-item sub-item">{team}</span>
-        ))}
+        {loadingTeams ? (
+          <span className="nav-item sub-item">Loading teams...</span>
+        ) : teamsError ? (
+          <span className="nav-item sub-item">{teamsError}</span>
+        ) : teams.length > 0 ? (
+          teams.map((team) => (
+            <NavLink
+              key={team._id || team.name}
+              to={`/team/${team._id}`}
+              className="nav-item sub-item"
+            >
+              {team.name}
+            </NavLink>
+          ))
+        ) : (
+          <span className="nav-item sub-item">
+            {user?.draft ? "No teams available for your draft." : "No draft selected yet."}
+          </span>
+        )}
       </div>
 
       <div className="sidebar-bottom">
