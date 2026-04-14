@@ -38,6 +38,8 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+// Authenticates an existing user and returns a signed JWT token.
+// This token is used by the frontend to access protected user routes.
 router.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body || {};
@@ -71,7 +73,9 @@ router.post("/login", async (req, res, next) => {
     return next(error);
   }
 });
-//ai generated
+// ai generated
+// Links the authenticated user to an existing draft by ID.
+// This powers draft selection so the user can resume their active draft context.
 router.put("/:username/draft", authMiddleware, async (req, res, next) => {
   try {
     const { username } = req.params;
@@ -125,6 +129,8 @@ router.post("/verify-token", async (req, res, next) => {
   }
 });
 
+// Returns all saved scouting/player notes for the authenticated user.
+// Used to hydrate the notes UI for the user's current draft workflow.
 router.get("/:username/notes", authMiddleware, async (req, res, next) => {
   try {
     const { username } = req.params;
