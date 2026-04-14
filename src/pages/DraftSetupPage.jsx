@@ -149,7 +149,7 @@ export default function DraftSetupPage() {
         updateUser({ draft: data.draft._id });
       }
 
-      navigate("/");
+      navigate("/app");
     } catch (err) {
       setError(err.message || "Unable to save draft settings.");
     } finally {
