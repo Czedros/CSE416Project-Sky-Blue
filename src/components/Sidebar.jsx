@@ -5,7 +5,7 @@ import { fetchDraftById, fetchUserDrafts, selectUserDraft } from "../services/ap
 import "./Sidebar.css";
 
 export default function Sidebar() {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const [drafts, setDrafts] = useState([]);
   const [teams, setTeams] = useState([]);
   const [loadingTeams, setLoadingTeams] = useState(false);
@@ -54,7 +54,7 @@ export default function Sidebar() {
     return () => {
       cancelled = true;
     };
-  }, [user?.username]);
+  }, [user?.username, user?.drafts?.length]);
 
   useEffect(() => {
     let cancelled = false;
