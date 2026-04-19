@@ -197,3 +197,15 @@ export async function removeTeamPlayer(teamId, playerId) {
     },
   });
 }
+
+export async function postDraftPick(draftId, pickData) {
+  return requestJson(CLIENT_BACKEND_URL, `/api/drafts/${encodeURIComponent(draftId)}/picks`, {
+    method: "POST",
+    userAuth: true,
+    body: pickData,
+    statusMessages: {
+      404: "Draft or team not found.",
+      400: "Invalid pick data or insufficient budget.",
+    },
+  });
+}

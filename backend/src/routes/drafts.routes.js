@@ -161,4 +161,94 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// Posts a draft pick: assigns a player to a team, updates roster and budget, records pick history
+router.post("/:draftId/picks", authMiddleware, async (req, res, next) => {
+  try {
+    const { draftId } = req.params;
+    const { playerId, playerName, position, price, teamId, nominatorTeamId } = req.body || {};
+
+    // Validation
+    if (!playerId || typeof playerId !== "string" || playerId.trim() === "") {
+      return res.status(400).json({ error: "playerId is required and must be a non-empty string" });
+    }
+
+    if (!playerName || typeof playerName !== "string" || playerName.trim() === "") {
+      return res.status(400).json({ error: "playerName is required and must be a non-empty string" });
+    }
+
+    if (!position || typeof position !== "string" || position.trim() === "") {
+      return res.status(400).json({ error: "position is required and must be a non-empty string" });
+    }
+
+    if (typeof price !== "number" || price < 0) {
+      return res.status(400).json({ error: "price is required and must be a non-negative number" });
+    }
+
+    if (!teamId || typeof teamId !== "string") {
+      return res.status(400).json({ error: "teamId is required and must be a valid ObjectId string" });
+    }
+
+    if (!nominatorTeamId || typeof nominatorTeamId !== "string") {
+      return res.status(400).json({ error: "nominatorTeamId is required and must be a valid ObjectId string" });
+    }
+
+    // Verify draft exists
+    const draft = await Draft.findById(draftId);
+    if (!draft) {
+      return res.status(404).json({ error: "Draft not found" });
+    }
+
+    // Verify team exists and belongs to this draft
+    const team = await Team.findById(teamId);
+    if (!team || team.draft.toString() !== draftId) {
+      return res.status(404).json({ error: "Team not found or does not belong to this draft" });
+    }
+
+    // Verify nominator team exists and belongs to this draft
+    const nominatorTeam = await Team.findById(nominatorTeamId);
+    if (!nominatorTeam || nominatorTeam.draft.toString() !== draftId) {
+      return res.status(404).json({ error: "Nominator team not found or does not belong to this draft" });
+    }
+
+    // Check if team has enough budget
+    if (team.budgetRemaining < price) {
+      return res.status(400).json({ error: "Team does not have enough budget for this pick" });
+    }
+
+    // Add player to team roster
+    const rosterItem = {
+      playerId,
+      playerName,
+      position,
+      amountPaid: price,
+    };
+
+    team.roster.push(rosterItem);
+    team.budgetRemaining -= price;
+
+    await team.save();
+
+    // Add to draft pick history
+    draft.pickHistory.push({
+      playerId,
+      playerName,
+      position,
+      price,
+      teamId,
+      nominatorTeamId,
+      timestamp: new Date(),
+    });
+
+    await draft.save();
+
+    return res.status(201).json({
+      message: "Player drafted successfully",
+      team,
+      draft,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

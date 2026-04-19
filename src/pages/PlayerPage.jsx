@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import { fetchPlayer, fetchUserPlayerNote, saveUserPlayerNote } from "../services/api";
+import { fetchPlayer, fetchUserPlayerNote, saveUserPlayerNote, fetchDraftById, postDraftPick } from "../services/api";
 import { useAuth } from "../hooks/useAuth";
 import "./PlayerPage.css";
 
@@ -55,9 +55,13 @@ export default function PlayerPage() {
   const [notes, setNotes] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
   const [draftPrice, setDraftPrice] = useState("");
+  const [selectedPosition, setSelectedPosition] = useState("");
+  const [nominatorTeam, setNominatorTeam] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
-
-  const draftTeams = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6"];
+  const [draftTeams, setDraftTeams] = useState([]);
+  const [draftId, setDraftId] = useState(null);
+  const [draft, setDraft] = useState(null);
+  const [draftLoading, setDraftLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -84,10 +88,46 @@ export default function PlayerPage() {
     };
   }, [playerId]);
 
+  // Fetch active draft and teams
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadActiveDraft() {
+      if (!user || !user.activeDraft) {
+        setDraftLoading(false);
+        setSaveMessage("No active draft found. Please select a draft first.");
+        return;
+      }
+
+      try {
+        const data = await fetchDraftById(user.activeDraft);
+        if (!cancelled) {
+          setDraftId(user.activeDraft);
+          setDraft(data.draft || null);
+          setDraftTeams(data.teams || []);
+          setDraftLoading(false);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setSaveMessage(`Failed to load draft: ${err.message}`);
+          setDraftLoading(false);
+        }
+      }
+    }
+
+    loadActiveDraft();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.activeDraft]);
+
   useEffect(() => {
     setNotes("");
     setSelectedTeam("");
     setDraftPrice("");
+    setSelectedPosition("");
+    setNominatorTeam("");
     setSaveMessage("");
   }, [playerId]);
 
@@ -167,13 +207,75 @@ export default function PlayerPage() {
     }
   }
 
-  function handleDraftPlayer() {
-    if (!selectedTeam || !draftPrice) {
-      setSaveMessage("Select a team and enter a draft price.");
+  async function handleDraftPlayer() {
+    if (!selectedTeam || !draftPrice || !selectedPosition || !nominatorTeam) {
+      setSaveMessage("Please fill in all draft fields: team, price, position, and nominator.");
       return;
     }
 
-    setSaveMessage(`Drafted to ${selectedTeam} for $${draftPrice}.`);
+    if (!draftId) {
+      setSaveMessage("No active draft found. Please select a draft first.");
+      return;
+    }
+
+    // Get the selected team object and check budget
+    const team = draftTeams.find((t) => t._id === selectedTeam);
+    const price = parseFloat(draftPrice);
+
+    if (!team) {
+      setSaveMessage("Selected team not found.");
+      return;
+    }
+
+    if (team.budgetRemaining < price) {
+      setSaveMessage(
+        `Insufficient budget. Team has $${team.budgetRemaining} remaining but needs $${price}.`
+      );
+      return;
+    }
+
+    // Check if team has an open roster slot for this position
+    if (!draft || !draft.rosterSlots) {
+      setSaveMessage("Draft roster configuration not found.");
+      return;
+    }
+
+    const positionSlot = draft.rosterSlots.find((slot) => slot.position === selectedPosition);
+    if (!positionSlot) {
+      setSaveMessage(`Position "${selectedPosition}" not available in draft roster slots.`);
+      return;
+    }
+
+    // Count how many players are already in this position
+    const playersInPosition = team.roster.filter((player) => player.position === selectedPosition).length;
+    if (playersInPosition >= positionSlot.count) {
+      setSaveMessage(
+        `No open slots for ${selectedPosition}. Team has ${playersInPosition}/${positionSlot.count} slots filled.`
+      );
+      return;
+    }
+
+    try {
+      const pickData = {
+        playerId,
+        playerName: player.name,
+        position: selectedPosition,
+        price,
+        teamId: selectedTeam,
+        nominatorTeamId: nominatorTeam,
+      };
+
+      await postDraftPick(draftId, pickData);
+      setSaveMessage(`Successfully drafted ${player.name} to team for $${draftPrice}!`);
+      setTimeout(() => {
+        setSelectedTeam("");
+        setDraftPrice("");
+        setSelectedPosition("");
+        setNominatorTeam("");
+      }, 1500);
+    } catch (err) {
+      setSaveMessage(`Failed to draft player: ${err.message}`);
+    }
   }
 
   return (
@@ -230,11 +332,48 @@ export default function PlayerPage() {
             className="form-input"
             value={selectedTeam}
             onChange={(e) => setSelectedTeam(e.target.value)}
+            disabled={draftTeams.length === 0}
           >
             <option value="">Choose team...</option>
             {draftTeams.map((team) => (
-              <option key={team} value={team}>
-                {team}
+              <option key={team._id} value={team._id}>
+                {team.name}
+              </option>
+            ))}
+          </select>
+
+          <label className="form-label" htmlFor="position-select">
+            Position
+          </label>
+          <select
+            id="position-select"
+            className="form-input"
+            value={selectedPosition}
+            onChange={(e) => setSelectedPosition(e.target.value)}
+            disabled={!player || !player.position || player.position.length === 0}
+          >
+            <option value="">Choose position...</option>
+            {player && player.position && player.position.map((pos) => (
+              <option key={pos} value={pos}>
+                {pos}
+              </option>
+            ))}
+          </select>
+
+          <label className="form-label" htmlFor="nominator-select">
+            Nominator Team
+          </label>
+          <select
+            id="nominator-select"
+            className="form-input"
+            value={nominatorTeam}
+            onChange={(e) => setNominatorTeam(e.target.value)}
+            disabled={draftTeams.length === 0}
+          >
+            <option value="">Choose nominator...</option>
+            {draftTeams.map((team) => (
+              <option key={team._id} value={team._id}>
+                {team.name}
               </option>
             ))}
           </select>
@@ -252,7 +391,7 @@ export default function PlayerPage() {
             onChange={(e) => setDraftPrice(e.target.value)}
           />
 
-          <button className="draft-btn" onClick={handleDraftPlayer}>
+          <button className="draft-btn" onClick={handleDraftPlayer} disabled={draftLoading || draftTeams.length === 0}>
             Draft Player
           </button>
         </div>

@@ -16,6 +16,19 @@ const statCategoriesSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const pickHistorySchema = new mongoose.Schema(
+  {
+    playerId: { type: String, required: true },
+    playerName: { type: String, required: true },
+    position: { type: String, required: true },
+    price: { type: Number, required: true, min: 0 },
+    teamId: { type: mongoose.Schema.Types.ObjectId, ref: "Team", required: true },
+    nominatorTeamId: { type: mongoose.Schema.Types.ObjectId, ref: "Team", required: true },
+    timestamp: { type: Date, default: Date.now },
+  },
+  { _id: false }
+);
+
 const draftSchema = new mongoose.Schema(
   {
     type: {
@@ -42,6 +55,10 @@ const draftSchema = new mongoose.Schema(
       type: statCategoriesSchema,
       required: true,
       default: () => ({ hitters: [], pitchers: [] }),
+    },
+    pickHistory: {
+      type: [pickHistorySchema],
+      default: [],
     },
   },
   { timestamps: true, versionKey: false }
