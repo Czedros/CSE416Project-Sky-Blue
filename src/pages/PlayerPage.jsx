@@ -273,7 +273,13 @@ export default function PlayerPage() {
       };
 
       await postDraftPick(draftId, pickData);
-      addPick({ ...pickData, teamName: team.name });
+      const nominator = draftTeams.find((t) => t._id === nominatorTeam);
+      addPick({
+        ...pickData,
+        teamName: team.name,
+        nominatorTeamName: nominator?.name,
+        timestamp: new Date().toISOString(),
+      });
       toast.success(`${player.name} drafted for $${price}!`);
       navigate("/app");
     } catch (err) {

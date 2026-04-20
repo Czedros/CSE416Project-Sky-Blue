@@ -1,0 +1,76 @@
+.draft-history {
+  max-width: 100%;
+}
+
+.draft-history-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.draft-history-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.draft-history-count {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.draft-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 0.87rem;
+}
+
+.draft-history-table thead {
+  border-bottom: 1px solid var(--border);
+}
+
+.draft-history-table th {
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.draft-history-table td {
+  padding: 11px 14px;
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.draft-history-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.draft-history-table .col-pick {
+  width: 56px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.draft-history-table .col-player {
+  font-weight: 500;
+  min-width: 160px;
+}
+
+.draft-history-table .col-price {
+  font-weight: 600;
+}
+
+.draft-history-empty {
+  text-align: center;
+  padding: 40px 14px !important;
+  color: var(--text-muted);
+}
