@@ -198,6 +198,17 @@ export async function removeTeamPlayer(teamId, playerId) {
   });
 }
 
+export async function undoLastPick(draftId) {
+  return requestJson(CLIENT_BACKEND_URL, `/api/drafts/${encodeURIComponent(draftId)}/picks/last`, {
+    method: "DELETE",
+    userAuth: true,
+    statusMessages: {
+      400: "No picks to undo.",
+      404: "Draft or team not found.",
+    },
+  });
+}
+
 export async function postDraftPick(draftId, pickData) {
   return requestJson(CLIENT_BACKEND_URL, `/api/drafts/${encodeURIComponent(draftId)}/picks`, {
     method: "POST",

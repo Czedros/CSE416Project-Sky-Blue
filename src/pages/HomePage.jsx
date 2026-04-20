@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchPlayers } from "../services/api";
+import { fetchPlayers, undoLastPick } from "../services/api";
+import { DraftContext } from "../context/DraftContext";
+import { useToast } from "../context/ToastContext";
 import "./HomePage.css";
 
 export default function HomePage() {
@@ -11,6 +13,10 @@ export default function HomePage() {
   const [posFilter, setPosFilter] = useState("");
   const [leagueFilter, setLeagueFilter] = useState("");
   const navigate = useNavigate();
+  const { draftedPlayerIds, pickHistory, draftId, teams, removeLastPick } = useContext(DraftContext);
+  const toast = useToast();
+  const [confirmingUndo, setConfirmingUndo] = useState(false);
+  const [undoing, setUndoing] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -41,6 +47,27 @@ export default function HomePage() {
     };
   }, []);
 
+  const lastPick = pickHistory.length > 0 ? pickHistory[pickHistory.length - 1] : null;
+
+  const lastPickTeamName = lastPick
+    ? (lastPick.teamName || teams.find((t) => t._id === String(lastPick.teamId))?.name || "Unknown team")
+    : null;
+
+  async function handleConfirmUndo() {
+    if (!draftId || !lastPick) return;
+    setUndoing(true);
+    try {
+      await undoLastPick(draftId);
+      removeLastPick();
+      setConfirmingUndo(false);
+      toast.success(`Undid pick: ${lastPick.playerName} returned to available players.`);
+    } catch (err) {
+      toast.error(`Failed to undo pick: ${err.message}`);
+    } finally {
+      setUndoing(false);
+    }
+  }
+
   const allPositions = useMemo(
     () => [...new Set(players.map((p) => p.position).filter(Boolean))].sort(),
     [players]
@@ -53,12 +80,13 @@ export default function HomePage() {
 
   const filtered = useMemo(() => {
     return players.filter((p) => {
+      if (draftedPlayerIds.has(String(p.id))) return false;
       if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (posFilter && p.position !== posFilter) return false;
       if (leagueFilter && p.league !== leagueFilter) return false;
       return true;
     });
-  }, [players, search, posFilter, leagueFilter]);
+  }, [players, search, posFilter, leagueFilter, draftedPlayerIds]);
 
   if (loading) {
     return (
@@ -89,7 +117,41 @@ export default function HomePage() {
           <h2>Available Players</h2>
           <span className="home-count">{filtered.length} players available</span>
         </div>
+        {lastPick && !confirmingUndo && (
+          <button className="undo-btn" onClick={() => setConfirmingUndo(true)}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M2 6h7a5 5 0 1 1 0 10H2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Undo Last Pick
+          </button>
+        )}
       </div>
+
+      {confirmingUndo && lastPick && (
+        <div className="undo-confirm-bar">
+          <span className="undo-confirm-text">
+            Undo <strong>{lastPick.playerName}</strong> → {lastPickTeamName} for{" "}
+            <strong>${lastPick.price}</strong>?
+          </span>
+          <div className="undo-confirm-actions">
+            <button
+              className="undo-confirm-yes"
+              onClick={handleConfirmUndo}
+              disabled={undoing}
+            >
+              {undoing ? "Undoing…" : "Yes, undo"}
+            </button>
+            <button
+              className="undo-confirm-cancel"
+              onClick={() => setConfirmingUndo(false)}
+              disabled={undoing}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="home-toolbar">
         <div className="search-box">
