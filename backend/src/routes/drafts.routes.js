@@ -251,4 +251,40 @@ router.post("/:draftId/picks", authMiddleware, async (req, res, next) => {
   }
 });
 
+// Undoes the most recent pick: removes the player from the team roster,
+// credits the price back to budget, and pops the last entry from pickHistory.
+router.delete("/:draftId/picks/last", authMiddleware, async (req, res, next) => {
+  try {
+    const { draftId } = req.params;
+
+    const draft = await Draft.findById(draftId);
+    if (!draft) {
+      return res.status(404).json({ error: "Draft not found" });
+    }
+
+    if (!draft.pickHistory || draft.pickHistory.length === 0) {
+      return res.status(400).json({ error: "No picks to undo" });
+    }
+
+    const lastPick = draft.pickHistory[draft.pickHistory.length - 1];
+
+    const team = await Team.findById(lastPick.teamId);
+    if (team) {
+      const rosterItem = team.roster.find((item) => item.playerId === lastPick.playerId);
+      if (rosterItem) {
+        team.roster = team.roster.filter((item) => item.playerId !== lastPick.playerId);
+        team.budgetRemaining += rosterItem.amountPaid;
+        await team.save();
+      }
+    }
+
+    draft.pickHistory.pop();
+    await draft.save();
+
+    return res.json({ pick: lastPick, team, draft });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

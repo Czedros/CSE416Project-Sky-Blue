@@ -65,7 +65,7 @@ export default function PlayerPage() {
   const [draft, setDraft] = useState(null);
   const [draftLoading, setDraftLoading] = useState(true);
   const { user } = useAuth();
-  const { addDraftedPlayer, draftedPlayerIds } = useContext(DraftContext);
+  const { addPick, draftedPlayerIds } = useContext(DraftContext);
   const toast = useToast();
 
   useEffect(() => {
@@ -273,7 +273,7 @@ export default function PlayerPage() {
       };
 
       await postDraftPick(draftId, pickData);
-      addDraftedPlayer(playerId);
+      addPick({ ...pickData, teamName: team.name });
       toast.success(`${player.name} drafted for $${price}!`);
       navigate("/app");
     } catch (err) {
