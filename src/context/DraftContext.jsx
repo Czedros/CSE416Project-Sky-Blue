@@ -57,8 +57,18 @@ export function DraftProvider({ children }) {
     });
   }, []);
 
+  // Removes a specific player from the drafted set and pick history
+  const removePlayer = useCallback((playerId) => {
+    setDraftedPlayerIds((prev) => {
+      const next = new Set(prev);
+      next.delete(String(playerId));
+      return next;
+    });
+    setPickHistory((prev) => prev.filter((pick) => String(pick.playerId) !== String(playerId)));
+  }, []);
+
   return (
-    <DraftContext.Provider value={{ draftedPlayerIds, pickHistory, draftId, teams, addPick, removeLastPick }}>
+    <DraftContext.Provider value={{ draftedPlayerIds, pickHistory, draftId, teams, addPick, removeLastPick, removePlayer }}>
       {children}
     </DraftContext.Provider>
   );

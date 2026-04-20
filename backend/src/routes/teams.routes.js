@@ -42,7 +42,7 @@ router.get("/:teamId", async (req, res, next) => {
 router.delete("/:teamId/roster/:playerId", authMiddleware, async (req, res, next) => {
   try {
     const { teamId, playerId } = req.params;
-    const team = await Team.findById(teamId);
+    const team = await Team.findById(teamId).populate('draft');
 
     if (!team) {
       return res.status(404).json({ error: "Team not found" });
@@ -56,6 +56,12 @@ router.delete("/:teamId/roster/:playerId", authMiddleware, async (req, res, next
     team.roster = team.roster.filter((item) => item.playerId !== playerId);
     team.budgetRemaining = Math.max(0, team.budgetRemaining + rosterItem.amountPaid);
     await team.save();
+
+    // Also remove from draft pick history if it exists
+    if (team.draft) {
+      team.draft.pickHistory = team.draft.pickHistory.filter((pick) => pick.playerId !== playerId);
+      await team.draft.save();
+    }
 
     return res.json({
       id: team._id,

@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchTeamById, removeTeamPlayer } from "../services/api";
+import { DraftContext } from "../context/DraftContext";
 import "./TeamPage.css";
 
 function formatCurrency(amount) {
@@ -17,6 +18,7 @@ export default function TeamPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [savingPlayerId, setSavingPlayerId] = useState(null);
+  const { removePlayer } = useContext(DraftContext);
 
   useEffect(() => {
     let cancelled = false;
@@ -89,6 +91,7 @@ export default function TeamPage() {
     try {
       const updated = await removeTeamPlayer(teamId, playerId);
       setTeam(updated);
+      removePlayer(playerId);
     } catch (err) {
       setError(err.message || "Unable to remove player.");
     } finally {
