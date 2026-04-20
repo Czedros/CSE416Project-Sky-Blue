@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchPlayers } from "../services/api";
+import { DraftContext } from "../context/DraftContext";
 import "./HomePage.css";
 
 export default function HomePage() {
@@ -11,6 +12,7 @@ export default function HomePage() {
   const [posFilter, setPosFilter] = useState("");
   const [leagueFilter, setLeagueFilter] = useState("");
   const navigate = useNavigate();
+  const { draftedPlayerIds } = useContext(DraftContext);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,12 +55,13 @@ export default function HomePage() {
 
   const filtered = useMemo(() => {
     return players.filter((p) => {
+      if (draftedPlayerIds.has(String(p.id))) return false;
       if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (posFilter && p.position !== posFilter) return false;
       if (leagueFilter && p.league !== leagueFilter) return false;
       return true;
     });
-  }, [players, search, posFilter, leagueFilter]);
+  }, [players, search, posFilter, leagueFilter, draftedPlayerIds]);
 
   if (loading) {
     return (
