@@ -114,6 +114,10 @@ export default function Sidebar() {
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
           Draft Setup
         </NavLink>
+        <NavLink to="/draft-history" className="nav-item">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v10H3zM3 7h10M7 3v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          Draft History
+        </NavLink>
       </nav>
 
       <div className="sidebar-section">

@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import PlayerPage from "./pages/PlayerPage";
 import HomePage from "./pages/HomePage";
 import DraftSetupPage from "./pages/DraftSetupPage";
+import DraftHistoryPage from "./pages/DraftHistoryPage";
 import TeamPage from "./pages/TeamPage";
 import WelcomePage from "./pages/WelcomePage";
 import { LoginPage } from "./pages/LoginPage";
@@ -31,6 +32,7 @@ export default function App() {
         >
           <Route path="/app" element={<HomePage />} />
           <Route path="/draft-setup" element={<DraftSetupPage />} />
+          <Route path="/draft-history" element={<DraftHistoryPage />} />
           <Route path="/team/:teamId" element={<TeamPage />} />
           <Route path="/player/:playerId" element={<PlayerPage />} />
           <Route path="*" element={<Navigate to="/app" replace />} />
