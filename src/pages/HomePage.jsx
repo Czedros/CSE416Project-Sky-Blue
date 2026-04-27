@@ -68,10 +68,14 @@ export default function HomePage() {
     }
   }
 
-  const allPositions = useMemo(
-    () => [...new Set(players.map((p) => p.position).filter(Boolean))].sort(),
-    [players]
-  );
+  const allPositions = useMemo(() => {
+    const posSet = new Set();
+    players.forEach((p) => {
+      const positions = Array.isArray(p.position) ? p.position : p.position ? [p.position] : [];
+      positions.forEach((pos) => posSet.add(pos));
+    });
+    return [...posSet].sort();
+  }, [players]);
 
   const allLeagues = useMemo(
     () => [...new Set(players.map((p) => p.league).filter(Boolean))].sort(),
@@ -82,7 +86,10 @@ export default function HomePage() {
     return players.filter((p) => {
       if (draftedPlayerIds.has(String(p.id))) return false;
       if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
-      if (posFilter && p.position !== posFilter) return false;
+      if (posFilter) {
+        const positions = Array.isArray(p.position) ? p.position : p.position ? [p.position] : [];
+        if (!positions.includes(posFilter)) return false;
+      }
       if (leagueFilter && p.league !== leagueFilter) return false;
       return true;
     });
@@ -200,7 +207,11 @@ export default function HomePage() {
           {filtered.map((p) => (
             <tr key={p.id}>
               <td className="col-name">{p.name}</td>
-              <td>{p.position}</td>
+              <td>
+                {(Array.isArray(p.position) ? p.position : p.position ? [p.position] : []).map((pos) => (
+                  <span key={pos} className="position-badge">{pos}</span>
+                ))}
+              </td>
               <td>{p.team}</td>
               <td>
                 <span className={`league-badge ${p.league === "AL" ? "league-al" : "league-nl"}`}>
