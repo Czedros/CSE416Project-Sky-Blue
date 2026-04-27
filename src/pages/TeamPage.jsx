@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchTeamById, removeTeamPlayer } from "../services/api";
+import { fetchTeamById, removeTeamPlayer, swapPlayerPosition, fetchPlayer } from "../services/api";
 import { DraftContext } from "../context/DraftContext";
+import { useToast } from "../context/ToastContext";
+
 import "./TeamPage.css";
 
 function formatCurrency(amount) {
@@ -19,6 +21,9 @@ export default function TeamPage() {
   const [error, setError] = useState("");
   const [savingPlayerId, setSavingPlayerId] = useState(null);
   const { removePlayer } = useContext(DraftContext);
+  const [swappingPlayerId, setSwappingPlayerId] = useState(null);
+  const [eligiblePositionsMap, setEligiblePositionsMap] = useState({});
+  const toast = useToast();
 
   useEffect(() => {
     let cancelled = false;
@@ -48,6 +53,47 @@ export default function TeamPage() {
       cancelled = true;
     };
   }, [teamId]);
+
+  useEffect(() => {
+  if (!team?.roster?.length) return;
+
+  let cancelled = false;
+
+  async function loadEligiblePositions() {
+    const entries = await Promise.all(
+      team.roster.map(async (item) => {
+        if (!item.playerId) return [item.playerId, []];
+        if (eligiblePositionsMap[item.playerId]) {
+          return [item.playerId, eligiblePositionsMap[item.playerId]];
+        }
+        try {
+          const playerData = await fetchPlayer(item.playerId);
+          const positions = Array.isArray(playerData.position)
+            ? playerData.position
+            : typeof playerData.position === "string"
+            ? [playerData.position]
+            : [];
+          return [item.playerId, positions];
+        } catch {
+          return [item.playerId, []];
+        }
+      })
+    );
+
+    if (!cancelled) {
+      setEligiblePositionsMap((prev) => {
+        const next = { ...prev };
+        for (const [id, positions] of entries) {
+          if (id) next[id] = positions;
+        }
+        return next;
+      });
+    }
+  }
+
+  loadEligiblePositions();
+  return () => { cancelled = true; };
+}, [team?.roster]);
 
   const roster = team?.roster || [];
   const draft = team?.draft;
@@ -98,6 +144,20 @@ export default function TeamPage() {
       setSavingPlayerId(null);
     }
   };
+  const handleSwapPosition = async (playerId, newPosition) => {
+  if (!newPosition) return;
+  setSwappingPlayerId(playerId);
+
+  try {
+    const updated = await swapPlayerPosition(teamId, playerId, newPosition);
+    setTeam((prev) => ({ ...prev, roster: updated.roster }));
+    toast.success(`${updated.swapped?.playerName ?? "Player"} moved to ${newPosition}`);
+  } catch (err) {
+    toast.error(err.message || "Unable to swap player position.");
+  } finally {
+    setSwappingPlayerId(null);
+  }
+};
 
   if (loading) {
     return (
@@ -178,23 +238,45 @@ export default function TeamPage() {
                 </tr>
               </thead>
               <tbody>
-                {roster.map((player) => (
-                  <tr key={player.playerId || `${player.playerName}-${player.position}-${player.amountPaid}`}>
-                    <td>{player.playerName || "Unknown"}</td>
-                    <td>{player.position || "--"}</td>
-                    <td>{formatCurrency(player.amountPaid)}</td>
-                    <td>
-                      <button
-                        className="remove-player-btn"
-                        onClick={() => handleRemovePlayer(player.playerId)}
-                        disabled={savingPlayerId === player.playerId}
-                        aria-label={`Remove ${player.playerName}`}
-                      >
-                        ×
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {roster.map((player) => {
+                  const eligible = eligiblePositionsMap[player.playerId] || [];
+                  const swappablePositions = eligible.filter((pos) => pos !== player.position);
+
+                  return (
+                    <tr key={player.playerId || `${player.playerName}-${player.position}-${player.amountPaid}`}>
+                      <td>{player.playerName || "Unknown"}</td>
+                      <td>
+                        {swappablePositions.length > 0 ? (
+                          <select
+                            className="position-swap-select"
+                            value={player.position || ""}
+                            disabled={swappingPlayerId === player.playerId}
+                            onChange={(e) => handleSwapPosition(player.playerId, e.target.value)}
+                            aria-label={`Change position for ${player.playerName}`}
+                          >
+                            <option value={player.position || ""}>{player.position || "--"}</option>
+                            {swappablePositions.map((pos) => (
+                              <option key={pos} value={pos}>{pos}</option>
+                            ))}
+                          </select>
+                        ) : (
+                          <span>{player.position || "--"}</span>
+                        )}
+                      </td>
+                      <td>{formatCurrency(player.amountPaid)}</td>
+                      <td>
+                        <button
+                          className="remove-player-btn"
+                          onClick={() => handleRemovePlayer(player.playerId)}
+                          disabled={savingPlayerId === player.playerId || swappingPlayerId === player.playerId}
+                          aria-label={`Remove ${player.playerName}`}
+                        >
+                          ×
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}

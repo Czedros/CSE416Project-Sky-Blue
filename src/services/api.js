@@ -220,3 +220,15 @@ export async function postDraftPick(draftId, pickData) {
     },
   });
 }
+
+export async function swapPlayerPosition(teamId, playerId, newPosition) {
+  return requestJson(CLIENT_BACKEND_URL, `/api/teams/${encodeURIComponent(teamId)}/swap`, {
+    method: "PUT",
+    userAuth: true,
+    body: { playerId, newPosition },
+    statusMessages: {
+      404: "Team or player not found.",
+      400: "Invalid swap request.",
+    },
+  });
+}
