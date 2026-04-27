@@ -4,7 +4,11 @@ import { fetchPlayers, undoLastPick } from "../services/api";
 import { DraftContext } from "../context/DraftContext";
 import { useToast } from "../context/ToastContext";
 import "./HomePage.css";
+import "./PlayerPage.css";
 
+function Badge({ label, variant }) {
+  return <span className={`badge badge-${variant}`}>{label}</span>;
+}
 export default function HomePage() {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -208,9 +212,11 @@ export default function HomePage() {
             <tr key={p.id}>
               <td className="col-name">{p.name}</td>
               <td>
-                {(Array.isArray(p.position) ? p.position : p.position ? [p.position] : []).map((pos) => (
-                  <span key={pos} className="position-badge">{pos}</span>
-                ))}
+                <div className="badge-row">
+                  {(Array.isArray(p.position) ? p.position : p.position ? [p.position] : []).map((pos) => (
+                    <Badge key={pos} label={pos} variant="position" />
+                  ))}
+                </div>
               </td>
               <td>{p.team}</td>
               <td>
