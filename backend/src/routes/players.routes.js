@@ -35,20 +35,25 @@ router.get("/:playerId/valuation", authMiddleware, async (req, res, next) => {
       }))
       .filter((p) => Number.isInteger(p.playerId) && Number.isFinite(p.price) && p.price >= 0);
 
-    const qs = new URLSearchParams();
-    qs.set("budget", String(draft.budgetPerTeam));
-    qs.set("teams", String(draft.numberOfTeams));
-    qs.set("drafted", JSON.stringify(drafted));
-    qs.set("rosterSlots", JSON.stringify(draft.rosterSlots || []));
-
     const base = String(env.draftKitApiUrl || "").replace(/\/+$/, "");
-    const url = `${base}/api/players/${encodeURIComponent(playerId)}/valuation?${qs.toString()}`;
+    const url = `${base}/api/players/value`;
 
     const upstream = await fetch(url, {
-      method: "GET",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${env.draftKitAppClientKey}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        leagueSettings: {
+          budget: draft.budgetPerTeam,
+          teams: draft.numberOfTeams,
+        },
+        draftState: {
+          playersDrafted: drafted,
+        },
+        playerIds: [Number(playerId)],
+      }),
     });
 
     const text = await upstream.text();
@@ -63,7 +68,11 @@ router.get("/:playerId/valuation", authMiddleware, async (req, res, next) => {
       return res.status(upstream.status).json(payload || { error: "Upstream valuation request failed" });
     }
 
-    return res.json(payload);
+    if (payload && Array.isArray(payload.values)) {
+      return res.json(payload.values[0] || {});
+    }
+
+    return res.json(payload || {});
   } catch (error) {
     return next(error);
   }
