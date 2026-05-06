@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchPlayers, fetchPlayerValuation, undoLastPick } from "../services/api";
+import { fetchPlayers, fetchPlayerValuations, undoLastPick } from "../services/api";
 import { DraftContext } from "../context/DraftContext";
 import { useToast } from "../context/ToastContext";
 import "./HomePage.css";
@@ -64,25 +64,32 @@ export default function HomePage() {
       const ids = players
         .map((p) => p?.id)
         .filter((id) => id !== undefined && id !== null)
-        .map((id) => String(id))
-        .filter((id) => !draftedPlayerIds.has(id));
+        .map((id) => Number(id))
+        .filter((id) => Number.isInteger(id) && !draftedPlayerIds.has(String(id)));
 
-      const results = await Promise.allSettled(
-        ids.map(async (id) => {
-          const data = await fetchPlayerValuation(id);
-          return { id, value: data?.value };
-        })
-      );
+      if (ids.length === 0) {
+        setValuations({});
+        return;
+      }
 
-      if (cancelled) return;
+      try {
+        const data = await fetchPlayerValuations(ids);
+        if (cancelled) return;
 
-      const next = {};
-      for (const r of results) {
-        if (r.status === "fulfilled" && r.value && r.value.id) {
-          next[r.value.id] = r.value.value;
+        const next = {};
+        if (Array.isArray(data)) {
+          data.forEach((item) => {
+            if (item && Number.isInteger(Number(item.playerId))) {
+              next[String(item.playerId)] = item.value;
+            }
+          });
+        }
+        setValuations(next);
+      } catch (loadError) {
+        if (!cancelled) {
+          setValuations({});
         }
       }
-      setValuations(next);
     }
 
     loadValuations();
@@ -90,7 +97,7 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-  }, [draftId, pickHistory.length, players, draftedPlayerIds]);
+  }, [draftId, pickHistory.length, players.length, draftedPlayerIds]);
 
   const lastPick = pickHistory.length > 0 ? pickHistory[pickHistory.length - 1] : null;
 
