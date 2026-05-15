@@ -1,0 +1,28 @@
+{
+  "leagueSettings": {
+    "budget": 260,
+    "teams": 12,
+    "scoringSystem": "roto",
+    "categories": {
+      "hitters": ["BA", "HR", "RBI", "R", "SB"],
+      "pitchers": ["ERA", "WHIP", "W", "SV", "K"]
+    },
+    "minPlayerCost": 1
+  },
+  "draftState": {
+    "playersDrafted": [
+      { "playerId": 605141, "price": 45 },
+      { "playerId": 621566, "price": 38 },
+      { "playerId": 592450, "price": 52 },
+      { "playerId": 545361, "price": 40 },
+      { "playerId": 660271, "price": 48 },
+      { "playerId": 596019, "price": 30 },
+      { "playerId": 665742, "price": 36 },
+      { "playerId": 571448, "price": 33 }
+    ],
+    "teamStates": [
+      { "teamId": "Team1", "budgetRemaining": 60, "rosterFilled": { "hitters": 10, "pitchers": 6 } },
+      { "teamId": "Team2", "budgetRemaining": 45, "rosterFilled": { "hitters": 11, "pitchers": 5 } }
+    ]
+  }
+}

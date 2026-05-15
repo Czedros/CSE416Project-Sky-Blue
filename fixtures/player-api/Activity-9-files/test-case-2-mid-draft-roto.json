@@ -1,0 +1,18 @@
+{
+  "leagueSettings": {
+    "budget": 260,
+    "teams": 10,
+    "scoringSystem": "roto",
+    "categories": {
+      "hitters": ["BA", "HR", "RBI", "R", "SB"],
+      "pitchers": ["ERA", "WHIP", "W", "SV", "K"]
+    }
+  },
+  "draftState": {
+    "playersDrafted": [
+      { "playerId": 605141, "price": 42 },
+      { "playerId": 621566, "price": 35 },
+      { "playerId": 592450, "price": 55 }
+    ]
+  }
+}

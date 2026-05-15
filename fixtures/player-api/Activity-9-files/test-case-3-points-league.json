@@ -1,0 +1,14 @@
+{
+  "leagueSettings": {
+    "budget": 260,
+    "teams": 12,
+    "scoringSystem": "points",
+    "pointsConfig": {
+      "hitters": { "HR": 4, "RBI": 1, "R": 1, "SB": 2, "H": 1 },
+      "pitchers": { "W": 5, "SV": 5, "K": 1, "QS": 3, "ERA": 2 }
+    }
+  },
+  "draftState": {
+    "playersDrafted": []
+  }
+}

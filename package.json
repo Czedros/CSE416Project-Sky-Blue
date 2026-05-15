@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:live:valuation": "vitest run src/__tests__/Valuation.live.test.js"
   },
   "dependencies": {
     "react": "^19.2.0",

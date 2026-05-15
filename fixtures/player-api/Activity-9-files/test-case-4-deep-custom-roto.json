@@ -1,0 +1,16 @@
+{
+  "leagueSettings": {
+    "budget": 300,
+    "teams": 15,
+    "scoringSystem": "roto",
+    "categories": {
+      "hitters": ["OBP", "HR", "RBI", "R", "SB"],
+      "pitchers": ["ERA", "WHIP", "W", "K", "QS"]
+    },
+    "budgetSplit": { "hitters": 0.7, "pitchers": 0.3 },
+    "rosterSpots": { "hitters": 14, "pitchers": 9 }
+  },
+  "draftState": {
+    "playersDrafted": []
+  }
+}

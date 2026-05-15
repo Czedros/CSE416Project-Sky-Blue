@@ -1,0 +1,1997 @@
+{
+  "fixtureMetadata": {
+    "sourceWorkbook": "2026Draft.xlsx",
+    "snapshot": "after-10-picks",
+    "draftedPlayerCount": 10,
+    "playerIdStatus": "drafted player IDs are not present in the workbook and require enrichment before strict numeric-ID API validation"
+  },
+  "playerIds": [
+    660271,
+    605141,
+    592450,
+    543037
+  ],
+  "playersToValue": [
+    {
+      "playerId": 660271,
+      "playerName": "Shohei Ohtani"
+    },
+    {
+      "playerId": 605141,
+      "playerName": "Mookie Betts"
+    },
+    {
+      "playerId": 592450,
+      "playerName": "Aaron Judge"
+    },
+    {
+      "playerId": 543037,
+      "playerName": "Gerrit Cole"
+    }
+  ],
+  "leagueSettings": {
+    "budget": 260,
+    "teams": 9,
+    "scoringSystem": "roto",
+    "rosterSpots": {
+      "hitters": 14,
+      "pitchers": 9
+    },
+    "categories": {
+      "hitters": [
+        "BA",
+        "HR",
+        "R",
+        "RBI",
+        "SB"
+      ],
+      "pitchers": [
+        "ERA",
+        "WHIP",
+        "W",
+        "SV",
+        "K"
+      ]
+    }
+  },
+  "draftState": {
+    "preDraftRosters": [
+      {
+        "teamName": "Team A",
+        "budgetRemainingAtSnapshot": 182,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": "D. Baldwin",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "3B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": "X. Edwards (2/S)",
+            "status": "S1",
+            "price": 23
+          },
+          {
+            "position": "SS",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "A. Burleson (1/O)",
+            "status": "F3",
+            "price": 15
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "S. Imanaga",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "P",
+            "playerName": "C. Horton",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "P",
+            "playerName": "B. Pfaadt",
+            "status": "F3",
+            "price": 15
+          },
+          {
+            "position": "P",
+            "playerName": "J. Misorowski",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team B",
+        "budgetRemainingAtSnapshot": 149,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": "F. Alvarez",
+            "status": "S1",
+            "price": 10
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": "S. Horowitz",
+            "status": "S1",
+            "price": 3
+          },
+          {
+            "position": "3B",
+            "playerName": "R. Mauricio",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "SS",
+            "playerName": "C.J. Abrams",
+            "status": "X",
+            "price": 20
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "J. Merrill",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "OF",
+            "playerName": "M. Harris",
+            "status": "X",
+            "price": 20
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": "Joseph Ortiz",
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "S. Alcantara",
+            "status": "X",
+            "price": 1
+          },
+          {
+            "position": "P",
+            "playerName": "M. King",
+            "status": "X",
+            "price": 16
+          },
+          {
+            "position": "P",
+            "playerName": "S. Strider",
+            "status": "S1",
+            "price": 16
+          },
+          {
+            "position": "P",
+            "playerName": "Y. Yamamoto",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team C",
+        "budgetRemainingAtSnapshot": 177,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": "H. Goodman",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "C",
+            "playerName": "G. Moreno",
+            "status": "S1",
+            "price": 10
+          },
+          {
+            "position": "1B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "3B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": "B. Turang",
+            "status": "L2",
+            "price": 7
+          },
+          {
+            "position": "SS",
+            "playerName": "T. Turner",
+            "status": "S1",
+            "price": 34
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "C. Carroll",
+            "status": "F3",
+            "price": 15
+          },
+          {
+            "position": "OF",
+            "playerName": "P. Crow-Armstrong",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "OF",
+            "playerName": "J. Walker",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "M. Boyd",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "P",
+            "playerName": "B. Woodruff",
+            "status": "S1",
+            "price": 4
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team D",
+        "budgetRemainingAtSnapshot": 162,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "3B",
+            "playerName": "M. Muncy",
+            "status": "S1",
+            "price": 9
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": "N. Hoerner",
+            "status": "S1",
+            "price": 17
+          },
+          {
+            "position": "SS",
+            "playerName": "F. Lindor",
+            "status": "S1",
+            "price": 36
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "B. Marsh",
+            "status": "X",
+            "price": 1
+          },
+          {
+            "position": "OF",
+            "playerName": "J. Wood",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "M. Keller",
+            "status": "S1",
+            "price": 7
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "R. Iglesias",
+            "status": "X",
+            "price": 18
+          }
+        ]
+      },
+      {
+        "teamName": "Team E",
+        "budgetRemainingAtSnapshot": 92,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "3B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "SS",
+            "playerName": "G. Perdomo",
+            "status": "X",
+            "price": 1
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "J. Soto",
+            "status": "S1",
+            "price": 47
+          },
+          {
+            "position": "OF",
+            "playerName": "K. Tucker",
+            "status": "S1",
+            "price": 44
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": "K. Schwarber",
+            "status": "S1",
+            "price": 23
+          },
+          {
+            "position": "P",
+            "playerName": "A. Abbott",
+            "status": "X",
+            "price": 4
+          },
+          {
+            "position": "P",
+            "playerName": "F. Peralta",
+            "status": "S1",
+            "price": 25
+          },
+          {
+            "position": "P",
+            "playerName": "P. Skenes",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "P",
+            "playerName": "N. Cortes",
+            "status": "LX",
+            "price": 14
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team F",
+        "budgetRemainingAtSnapshot": 194,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "3B",
+            "playerName": "N. Arenado",
+            "status": "S1",
+            "price": 11
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "SS",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "S. Frelick",
+            "status": "F3",
+            "price": 15
+          },
+          {
+            "position": "OF",
+            "playerName": "J. Chourio",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "OF",
+            "playerName": "F. Crews",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "R. Lopez",
+            "status": "X",
+            "price": 4
+          },
+          {
+            "position": "P",
+            "playerName": "M. McGreevy",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "P",
+            "playerName": "C. Sale",
+            "status": "F3",
+            "price": 15
+          },
+          {
+            "position": "P",
+            "playerName": "J. Taillon",
+            "status": "X",
+            "price": 1
+          },
+          {
+            "position": "P",
+            "playerName": "B. Singer",
+            "status": "S1",
+            "price": 4
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team G",
+        "budgetRemainingAtSnapshot": 198,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": "M. Busch",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "3B",
+            "playerName": "Austin Riley",
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "CI",
+            "playerName": "P. Smith (1B)",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "2B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "SS",
+            "playerName": "M. Winn",
+            "status": "F2",
+            "price": 10
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "R. Acuna",
+            "status": "S1",
+            "price": 31
+          },
+          {
+            "position": "OF",
+            "playerName": "M. Yastremski",
+            "status": "X",
+            "price": 2
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "N. Lodolo",
+            "status": "S1",
+            "price": 7
+          },
+          {
+            "position": "P",
+            "playerName": "J. Luzardo",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team H",
+        "budgetRemainingAtSnapshot": 166,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": "C. Kelly",
+            "status": "S1",
+            "price": 2
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": "F. Freeman",
+            "status": "S1",
+            "price": 31
+          },
+          {
+            "position": "3B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "SS",
+            "playerName": "E. De La Cruz",
+            "status": "F3",
+            "price": 15
+          },
+          {
+            "position": "MI",
+            "playerName": "D. Swanson (SS)",
+            "status": "S1",
+            "price": 8
+          },
+          {
+            "position": "OF",
+            "playerName": "J. Hoo Lee",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "C. Cavalli",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "P",
+            "playerName": "L. Webb",
+            "status": "S1",
+            "price": 28
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "teamName": "Team I",
+        "budgetRemainingAtSnapshot": 104,
+        "roster": [
+          {
+            "position": "C",
+            "playerName": "A. Ramirez",
+            "status": "S1",
+            "price": 1
+          },
+          {
+            "position": "C",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "1B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "3B",
+            "playerName": "M. Machado",
+            "status": "X",
+            "price": 33
+          },
+          {
+            "position": "CI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "2B",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "SS",
+            "playerName": "W. Adames",
+            "status": "X",
+            "price": 11
+          },
+          {
+            "position": "MI",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": "V. Scott II",
+            "status": "F1",
+            "price": 5
+          },
+          {
+            "position": "OF",
+            "playerName": "S. Suzuki",
+            "status": "X",
+            "price": 18
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "OF",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "U",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "G. Holmes",
+            "status": "S1",
+            "price": 5
+          },
+          {
+            "position": "P",
+            "playerName": "C. Sanchez",
+            "status": "L2",
+            "price": 9
+          },
+          {
+            "position": "P",
+            "playerName": "N. Pivetta",
+            "status": "S1",
+            "price": 13
+          },
+          {
+            "position": "P",
+            "playerName": "R. Ray",
+            "status": "S1",
+            "price": 15
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          },
+          {
+            "position": "P",
+            "playerName": "S. Ohtani",
+            "status": "L2",
+            "price": 46
+          },
+          {
+            "position": "P",
+            "playerName": null,
+            "status": null,
+            "price": null
+          }
+        ]
+      }
+    ],
+    "minors": [
+      {
+        "teamName": "Team A",
+        "players": [
+          {
+            "slot": "Jeferson Quero",
+            "playerName": "1"
+          },
+          {
+            "slot": "Edwin Arroyo",
+            "playerName": "2"
+          },
+          {
+            "slot": "Starlyn Caba",
+            "playerName": "3"
+          },
+          {
+            "slot": "Emil Morales",
+            "playerName": "4"
+          },
+          {
+            "slot": "Eli Willits",
+            "playerName": "5"
+          },
+          {
+            "slot": "Kevin Alcantara",
+            "playerName": "6"
+          },
+          {
+            "slot": "Edwin Florentino",
+            "playerName": "7"
+          },
+          {
+            "slot": "Robby Snelling",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team B",
+        "players": [
+          {
+            "slot": "Kody Hoese",
+            "playerName": "1"
+          },
+          {
+            "slot": "Jesus Made",
+            "playerName": "2"
+          },
+          {
+            "slot": "Hedbert Perez",
+            "playerName": "3"
+          },
+          {
+            "slot": "Esmerlyn Valdez",
+            "playerName": "4"
+          },
+          {
+            "slot": "Moises Ballesteros",
+            "playerName": "5"
+          },
+          {
+            "slot": "Liam Doyle",
+            "playerName": "6"
+          },
+          {
+            "slot": "",
+            "playerName": "7"
+          },
+          {
+            "slot": "",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team C",
+        "players": [
+          {
+            "slot": "James Triantos",
+            "playerName": "1"
+          },
+          {
+            "slot": "Cam Collier",
+            "playerName": "2"
+          },
+          {
+            "slot": "Josuar De Jesus Gonzalez",
+            "playerName": "3"
+          },
+          {
+            "slot": "Luis Pena",
+            "playerName": "4"
+          },
+          {
+            "slot": "Jefferson Rojas",
+            "playerName": "5"
+          },
+          {
+            "slot": "Joendry Vargas",
+            "playerName": "6"
+          },
+          {
+            "slot": "Jett Williams",
+            "playerName": "7"
+          },
+          {
+            "slot": "Jodue De Paula",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team D",
+        "players": [
+          {
+            "slot": "Harry Ford",
+            "playerName": "1"
+          },
+          {
+            "slot": "Cooper Pratt",
+            "playerName": "2"
+          },
+          {
+            "slot": "Bubba Chandler",
+            "playerName": "3"
+          },
+          {
+            "slot": "Nolan McLean",
+            "playerName": "4"
+          },
+          {
+            "slot": "Cam Caminiti",
+            "playerName": "5"
+          },
+          {
+            "slot": "",
+            "playerName": "6"
+          },
+          {
+            "slot": "",
+            "playerName": "7"
+          },
+          {
+            "slot": "",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team E",
+        "players": []
+      },
+      {
+        "teamName": "Team F",
+        "players": [
+          {
+            "slot": "Joe Mack",
+            "playerName": "1"
+          },
+          {
+            "slot": "Ryan Clifford",
+            "playerName": "2"
+          },
+          {
+            "slot": "Roki Sasaki",
+            "playerName": "3"
+          },
+          {
+            "slot": "Logan Henderson",
+            "playerName": "4"
+          },
+          {
+            "slot": "Jonah Tong",
+            "playerName": "5"
+          },
+          {
+            "slot": "Thomas White",
+            "playerName": "6"
+          },
+          {
+            "slot": "",
+            "playerName": "7"
+          },
+          {
+            "slot": "",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team G",
+        "players": [
+          {
+            "slot": "Dalton Rushing",
+            "playerName": "1"
+          },
+          {
+            "slot": "Sal Stewart",
+            "playerName": "2"
+          },
+          {
+            "slot": "Justin Crawford",
+            "playerName": "3"
+          },
+          {
+            "slot": "Termarr Johnson",
+            "playerName": "4"
+          },
+          {
+            "slot": "Steele Hall",
+            "playerName": "5"
+          },
+          {
+            "slot": "Aidan Miller",
+            "playerName": "6"
+          },
+          {
+            "slot": "A.J. Ewing",
+            "playerName": "7"
+          },
+          {
+            "slot": "Tink Hence",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team H",
+        "players": [
+          {
+            "slot": "Owen Caissie",
+            "playerName": "1"
+          },
+          {
+            "slot": "Delvin Perez",
+            "playerName": "2"
+          },
+          {
+            "slot": "Ed Howard",
+            "playerName": "3"
+          },
+          {
+            "slot": "Hunter Bishop",
+            "playerName": "4"
+          },
+          {
+            "slot": "Drew Gilbert",
+            "playerName": "5"
+          },
+          {
+            "slot": "Hudson Head",
+            "playerName": "6"
+          },
+          {
+            "slot": "Mike Sirota",
+            "playerName": "7"
+          },
+          {
+            "slot": "Ryan Waldschmidt",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team I",
+        "players": []
+      }
+    ],
+    "playersDrafted": [
+      {
+        "pickNumber": 1,
+        "nominatingTeamName": "Team E",
+        "playerName": "William Contreras",
+        "playerId": null,
+        "position": "C",
+        "mlbTeam": "MIL",
+        "winningTeamName": "Team D",
+        "price": 25
+      },
+      {
+        "pickNumber": 2,
+        "nominatingTeamName": "Team A",
+        "playerName": "Daylen Lile",
+        "playerId": null,
+        "position": "OF",
+        "mlbTeam": "WAS",
+        "winningTeamName": "Team E",
+        "price": 12
+      },
+      {
+        "pickNumber": 3,
+        "nominatingTeamName": "Team F",
+        "playerName": "Fernando Tatis",
+        "playerId": null,
+        "position": "OF",
+        "mlbTeam": "SD",
+        "winningTeamName": "Team H",
+        "price": 43
+      },
+      {
+        "pickNumber": 4,
+        "nominatingTeamName": "Team H",
+        "playerName": "Mookie Betts",
+        "playerId": null,
+        "position": "SS",
+        "mlbTeam": "LAD",
+        "winningTeamName": "Team D",
+        "price": 28
+      },
+      {
+        "pickNumber": 5,
+        "nominatingTeamName": "Team G",
+        "playerName": "Ketel Marte",
+        "playerId": null,
+        "position": "OF",
+        "mlbTeam": "WAS",
+        "winningTeamName": "Team F",
+        "price": 38
+      },
+      {
+        "pickNumber": 6,
+        "nominatingTeamName": "Team B",
+        "playerName": "Marcus Semien",
+        "playerId": null,
+        "position": "2B",
+        "mlbTeam": "NYM",
+        "winningTeamName": "Team F",
+        "price": 18
+      },
+      {
+        "pickNumber": 7,
+        "nominatingTeamName": "Team C",
+        "playerName": "Bryce Harper",
+        "playerId": null,
+        "position": "1B",
+        "mlbTeam": "PHI",
+        "winningTeamName": "Team C",
+        "price": 36
+      },
+      {
+        "pickNumber": 8,
+        "nominatingTeamName": "Team D",
+        "playerName": "Bo Bichette",
+        "playerId": null,
+        "position": "SS/3B",
+        "mlbTeam": "NYM",
+        "winningTeamName": "Team H",
+        "price": 33
+      },
+      {
+        "pickNumber": 9,
+        "nominatingTeamName": "Team I",
+        "playerName": "Ozzie Albies",
+        "playerId": null,
+        "position": "2B",
+        "mlbTeam": "ATL",
+        "winningTeamName": "Team G",
+        "price": 25
+      },
+      {
+        "pickNumber": 10,
+        "nominatingTeamName": "Team E",
+        "playerName": "Eugenio Suarez",
+        "playerId": null,
+        "position": "3B",
+        "mlbTeam": "CIN",
+        "winningTeamName": "Team F",
+        "price": 25
+      }
+    ],
+    "taxiDrafted": [
+      {
+        "teamName": "Team A",
+        "players": [
+          {
+            "slot": "Estuary Ruiz",
+            "playerName": "1"
+          },
+          {
+            "slot": "Griffin Conine",
+            "playerName": "2"
+          },
+          {
+            "slot": "Will Benson",
+            "playerName": "3"
+          },
+          {
+            "slot": "Josia Grey",
+            "playerName": "4"
+          },
+          {
+            "slot": "Blake Perkins",
+            "playerName": "5"
+          },
+          {
+            "slot": "Albert Alsoy",
+            "playerName": "6"
+          },
+          {
+            "slot": "Gavin Stone",
+            "playerName": "7"
+          },
+          {
+            "slot": "Alex Freeland",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team B",
+        "players": [
+          {
+            "slot": "Jared Triolo",
+            "playerName": "1"
+          },
+          {
+            "slot": "Encarnacion",
+            "playerName": "2"
+          },
+          {
+            "slot": "Phil Maton",
+            "playerName": "3"
+          },
+          {
+            "slot": "Adrian Morejon",
+            "playerName": "4"
+          },
+          {
+            "slot": "Pedro Pages",
+            "playerName": "5"
+          },
+          {
+            "slot": "Chris Paddack",
+            "playerName": "6"
+          },
+          {
+            "slot": "Tyrone Taylor",
+            "playerName": "7"
+          },
+          {
+            "slot": "Adrian Del Castillo",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team C",
+        "players": [
+          {
+            "slot": "Jacob Young",
+            "playerName": "1"
+          },
+          {
+            "slot": "Nate Lowe",
+            "playerName": "2"
+          },
+          {
+            "slot": "Hilton Waltrip",
+            "playerName": "3"
+          },
+          {
+            "slot": "Johan Rojas",
+            "playerName": "4"
+          },
+          {
+            "slot": "Jose Quintana",
+            "playerName": "5"
+          },
+          {
+            "slot": "Jake Bowers",
+            "playerName": "6"
+          },
+          {
+            "slot": "Endy Rodriguez",
+            "playerName": "7"
+          },
+          {
+            "slot": "Nathan Church",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team D",
+        "players": [
+          {
+            "slot": "Ha Seong Kim",
+            "playerName": "1"
+          },
+          {
+            "slot": "Rafael Marchan",
+            "playerName": "2"
+          },
+          {
+            "slot": "Miguel Andujar",
+            "playerName": "3"
+          },
+          {
+            "slot": "Dylan Moore",
+            "playerName": "4"
+          },
+          {
+            "slot": "Jose Alvarado",
+            "playerName": "5"
+          },
+          {
+            "slot": "Jose Urquidy",
+            "playerName": "6"
+          },
+          {
+            "slot": "Calvin Faucher",
+            "playerName": "7"
+          },
+          {
+            "slot": "Jason Adam",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team E",
+        "players": []
+      },
+      {
+        "teamName": "Team F",
+        "players": [
+          {
+            "slot": "Garcia",
+            "playerName": "1"
+          },
+          {
+            "slot": "Javier Sonova",
+            "playerName": "2"
+          },
+          {
+            "slot": "Hae Seong Kim",
+            "playerName": "3"
+          },
+          {
+            "slot": "Kyle Leahy",
+            "playerName": "4"
+          },
+          {
+            "slot": "Eli White",
+            "playerName": "5"
+          },
+          {
+            "slot": "Justin Robleski",
+            "playerName": "6"
+          },
+          {
+            "slot": "Jose Fernandez",
+            "playerName": "7"
+          },
+          {
+            "slot": "Santiago Espinal",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team G",
+        "players": [
+          {
+            "slot": "Ivan Herrera",
+            "playerName": "1"
+          },
+          {
+            "slot": "Romero",
+            "playerName": "2"
+          },
+          {
+            "slot": "Braxton Garrett",
+            "playerName": "3"
+          },
+          {
+            "slot": "Keybron Hayes",
+            "playerName": "4"
+          },
+          {
+            "slot": "Brad Lord",
+            "playerName": "5"
+          },
+          {
+            "slot": "Seth Halvorsen",
+            "playerName": "6"
+          },
+          {
+            "slot": "Ramon Urias",
+            "playerName": "7"
+          },
+          {
+            "slot": "Curtis Mead",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team H",
+        "players": [
+          {
+            "slot": "Luis Rianfro",
+            "playerName": "1"
+          },
+          {
+            "slot": "Nunez",
+            "playerName": "2"
+          },
+          {
+            "slot": "Victor Zodnik",
+            "playerName": "3"
+          },
+          {
+            "slot": "Christopher Morell",
+            "playerName": "4"
+          },
+          {
+            "slot": "Justin Steele",
+            "playerName": "5"
+          },
+          {
+            "slot": "Paul Sewald",
+            "playerName": "6"
+          },
+          {
+            "slot": "Jorbit Vivas",
+            "playerName": "7"
+          },
+          {
+            "slot": "Edmundo Sosa",
+            "playerName": "8"
+          }
+        ]
+      },
+      {
+        "teamName": "Team I",
+        "players": []
+      }
+    ]
+  }
+}
